@@ -71,8 +71,22 @@
 
 <main>
     <div class:flex-container={!hasText}>
-        <div class="container center bg-white" class:logo={!hasText}>
-            <img src="/videoke-logo.png" class:image-small="{hasText}" alt="Videokê Logo - Leão cantando e segurando o microfone com a mão direita."/>
+        <div class="header">
+            <div class="container center bg-white" class:logo={!hasText}>
+                <img src="/videoke-logo.png" class:image-small="{hasText}" alt="Videokê Logo - Leão cantando e segurando o microfone com a mão direita."/>
+            </div>
+            {#if hasText}
+            <div class="container center">
+                <div class="title">
+                    Karaokê<br>
+                    do<br>
+                    Sandro
+                </div>
+                <div>
+                    {musicas.length} músicas
+                </div>
+            </div>
+            {/if}
         </div>
         <div class="container search-container mb-4">
             <div class="p-2">
