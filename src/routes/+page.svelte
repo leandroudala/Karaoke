@@ -30,6 +30,35 @@
         searching = false;
     }
 
+
+    let isPlaying = false;
+    let backgroundMusic: HTMLAudioElement;
+
+    function tocarSom(codigo: Number) {
+        console.log(backgroundMusic);
+        const cod = (''+ codigo).padStart(5, '0');
+        const audioUrl = `https://ivideoke.com.br/static/mp3/${cod}.mp3`;
+
+        const currentUri = backgroundMusic.src
+        const sameAudio = currentUri == audioUrl;
+
+        if (isPlaying && sameAudio) {
+            backgroundMusic.pause();
+            isPlaying = false;
+            return;
+        }
+
+        if (!isPlaying && sameAudio) {
+            backgroundMusic.play();
+            isPlaying = true;
+            return;
+        }
+
+        backgroundMusic.src = audioUrl;
+        backgroundMusic.play();
+        isPlaying = true;
+    }
+
     function onBuscaChanged() {
         hasText = search.length != 0;
         clearTimeout(searchTimeout);
@@ -70,6 +99,7 @@
 </svelte:head>
 
 <main>
+    <audio src="" bind:this={backgroundMusic}></audio>
     <div class:flex-container={!hasText}>
         <div class="header">
             <div class="container center bg-white" class:logo={!hasText}>
@@ -108,7 +138,7 @@
                     <tbody>
                         {#if encontradas.length }
                         {#each encontradas as musica}
-                        <tr>
+                        <tr on:click={() => tocarSom(musica.codigo) }>
                             <td>{musica.codigo}</td>
                             <td>{musica.interprete}</td>
                             <td>{musica.nome}</td>
