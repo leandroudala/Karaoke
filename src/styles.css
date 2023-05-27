@@ -34,6 +34,11 @@ main {
     display: flex;
 }
 
+.header img {
+    max-width: 300px;
+    max-height: 300px;
+}
+
 .container {
     width: 100%;
     max-width: 960px;
