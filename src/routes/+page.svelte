@@ -8,6 +8,7 @@
         codigo: Number;
         trecho: String;
         idioma: String;
+        index: String;
     };
 
     let musicas: Musica[] = [];
@@ -18,14 +19,18 @@
     let searchTimeout = setTimeout(() => 0, 1);
     let searching = false;
 
+    function removerAcentuacao(texto: string): string {
+        return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function limparString(texto: string): string {
+        return removerAcentuacao(texto).toLowerCase();
+    }
+
     function procurarMusica() {
-        const termo = search.toLowerCase()
+        const termo = limparString(search);
         
-        encontradas = musicas.filter(musica => {
-            return musica.nome.toLowerCase().indexOf(termo) != -1 ||
-            musica.interprete.toLowerCase().indexOf(termo) != -1 ||
-            musica.trecho.toLowerCase().indexOf(termo) != -1
-        });
+        encontradas = musicas.filter(musica =>  musica.index.indexOf(termo) != -1);
 
         searching = false;
     }
@@ -81,9 +86,11 @@
 
         const rawMusicas: Musica[] = await response.json()
         musicas = rawMusicas.map(musica => {
-            musica.interprete += '';
-            musica.nome += '';
-            musica.trecho += '';
+            musica.index = limparString(
+                (musica.interprete + '_') +
+                (musica.nome + '_') + 
+                (musica.trecho + '')
+            );
 
             return musica;
         });
