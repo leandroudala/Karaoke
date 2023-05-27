@@ -5,14 +5,31 @@
 }
 
 html,
-body {
+body,
+main {
     width: 100%;
     height: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     width: 100%;
     max-width: 960px;
+}
+
+.container-fill {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.scrollable-content {
+    height: 100%;
 }
 
 .flex-container {
@@ -47,10 +64,6 @@ body {
 
 .bg-white {
     background-color: #fff;
-}
-
-.bg-red {
-    background-color: #F00;
 }
 
 .mt-4 {
@@ -114,6 +127,12 @@ body {
     position: sticky;
     top: 0;
     background-color: white;
+}
+
+thead th {
+    position: sticky;
+    top: -1px;
+    background-color: #E4F0DB;
 }
 
 @media (max-width: 800px) {

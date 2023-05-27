@@ -69,50 +69,52 @@
     <title>Karaokê do Sandro</title>
 </svelte:head>
 
-<div class:flex-container={!hasText}>
-    <div class="container center bg-white" class:logo={!hasText}>
-        <img src="/videoke-logo.png" class:image-small="{hasText}" alt="Videokê Logo - Leão cantando e segurando o microfone com a mão direita."/>
-    </div>
-    <div class="container search-container mb-4">
-        <div class="p-2">
-            <input type="search" bind:value={search} on:input={onBuscaChanged} class="form-control w-100" placeholder="Buscar por Músicas, Intérpretes">
+<main>
+    <div class:flex-container={!hasText}>
+        <div class="container center bg-white" class:logo={!hasText}>
+            <img src="/videoke-logo.png" class:image-small="{hasText}" alt="Videokê Logo - Leão cantando e segurando o microfone com a mão direita."/>
+        </div>
+        <div class="container search-container mb-4">
+            <div class="p-2">
+                <input type="search" bind:value={search} on:input={onBuscaChanged} class="form-control w-100" placeholder="Buscar por Músicas, Intérpretes">
+            </div>
         </div>
     </div>
-</div>
-<div class="container" class:hidden="{!hasText}">
-    <p>
-        Resultados encontrados: {encontradas.length}
-    </p>
-    <table class="table table-striped">
-        <thead class="thead-green">
-            <tr>
-                <th scope="col">Código</th>
-                <th scope="col">Intérprete</th>
-                <th scope="col">Título</th>
-                <th scope="col">Início da Letra</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#if encontradas.length }
-            {#each encontradas as musica}
-            <tr>
-                <td>{musica.codigo}</td>
-                <td>{musica.interprete}</td>
-                <td>{musica.nome}</td>
-                <td>{musica.trecho}</td>
-            </tr>
-            {/each}
-            {:else}
-                <tr>
-                    <td class="center" colspan="4">
-                        {#if searching}
-                        Procurando...
+    <div class="container container-fill" class:hidden="{!hasText}">
+        <div class="scrollable-content">
+                <table class="table table-striped">
+                    <thead class="thead-green">
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Intérprete</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Início da Letra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {#if encontradas.length }
+                        {#each encontradas as musica}
+                        <tr>
+                            <td>{musica.codigo}</td>
+                            <td>{musica.interprete}</td>
+                            <td>{musica.nome}</td>
+                            <td>{musica.trecho}</td>
+                        </tr>
+                        {/each}
                         {:else}
-                        Nenhuma música encontrada.
+                            <tr>
+                                <td class="center" colspan="4">
+                                    {#if searching}
+                                    Procurando...
+                                    {:else}
+                                    Nenhuma música encontrada.
+                                    {/if}
+                                </td>
+                            </tr>
                         {/if}
-                    </td>
-                </tr>
-            {/if}
-        </tbody>
-    </table>
-</div>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</main>
+
