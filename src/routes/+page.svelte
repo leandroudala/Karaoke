@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import '../styles.css';
 	import { onMount } from 'svelte';
 
@@ -19,6 +21,15 @@
 	let searchTimeout = setTimeout(() => 0, 1);
 	let searching = false;
 
+	onMount(() => {
+		const query = new URLSearchParams($page.url.searchParams.toString());
+		search = query.get('q') ?? '';
+
+		if (search !== '') {
+			onBuscaChanged();
+		}
+	});
+
 	function removerAcentuacao(texto: string): string {
 		return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 	}
@@ -36,7 +47,10 @@
 
 		encontradas = musicas.filter((musica) => musica.index.indexOf(termo) != -1);
 
+		const query = new URLSearchParams($page.url.searchParams.toString());
+		query.set('q', termo);
 		searching = false;
+		goto(`?${query.toString()}`);
 	}
 
 	let isPlaying = false;
